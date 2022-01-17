@@ -1017,7 +1017,7 @@ namespace RelationalOperatorDemo
         }
     }
 }
-*/
+
 // Overload true and false for ThreeD.
 using System;
 namespace OperatorOverloadsTrueAndfalse
@@ -1107,3 +1107,105 @@ namespace OperatorOverloadsTrueAndfalse
     }
 
 }
+
+// A simple way to overload !, |, and & for ThreeD
+
+using System;
+namespace LogicalOperatorOverLoading
+{
+    class ThreeD
+    {
+        int x, y, z;
+        public ThreeD()
+        {
+            x = y;
+            y = z;
+            z = 0;
+        }
+        public ThreeD(int i, int j ,int k)
+        {
+            x = i;
+            y = j;
+            z = k;
+        }
+        public static bool operator !(ThreeD op)
+        {
+          if ((op.x != 0) || (op.y != 0)||(op.z!=0))
+            {
+                Console.WriteLine("This is false");
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("This is true");
+                return true;
+            }
+        }
+        public static bool operator &(ThreeD op1,ThreeD op2)
+        {
+            if((op1.x !=0)&&(op1.y!=0)&&(op1.z!=0)&(op2.x!=0)&&(op2.y !=0)&&(op2.z !=0))
+            {
+                Console.WriteLine("This is true");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("This is false");
+                return false;
+            }
+        }
+        public static bool operator |(ThreeD op1, ThreeD op2)
+        {
+            if ((op1.x != 0) || (op1.y != 0) || (op1.z != 0) & (op2.x != 0) || (op2.y != 0) || (op2.z != 0))
+            {
+                Console.WriteLine("This is true");
+                return true;
+
+            }
+            else
+            {
+                Console.WriteLine("This is false");
+                return false;
+            }
+        }
+        public void Show ()
+        {
+            Console.WriteLine("X value :" + x + "\t Y value :" + y + "\t Z value" + z);
+        }
+
+    }
+    class ThreeDDemo
+    {
+        public static void Main()
+        {
+            ThreeD a = new ThreeD(1, 2, 3);
+            ThreeD b = new ThreeD(5, 6, 7);
+            ThreeD c = new ThreeD(10, 10, 10);
+            Console.WriteLine("----- Here is A Value ----");
+            a.Show();
+            Console.WriteLine();
+            Console.WriteLine("----- Here is B Value ----");
+            b.Show();
+            Console.WriteLine();
+            Console.WriteLine("----- Here is C Value ----");
+           c.Show();
+            Console.WriteLine();
+           
+if (!a) Console.WriteLine("a is false.");
+        if (!b) Console.WriteLine("b is false.");
+        if (!c) Console.WriteLine("c is false.");
+        Console.WriteLine();
+        Console.WriteLine("Use & and |");
+        if (a & b) Console.WriteLine("a & b is true.");
+        else Console.WriteLine("a & b is false.");
+        if (a & c) Console.WriteLine("a & c is true.");
+        else Console.WriteLine("a & c is false.");
+            if (a | b) Console.WriteLine("a | b is true.");
+            else Console.WriteLine("a | b is false.");
+            if (a | c) Console.WriteLine("a | c is true.");
+            else Console.WriteLine("a | c is false.");
+            Console.WriteLine();
+        }
+    }
+}
+*/
