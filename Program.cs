@@ -1208,4 +1208,258 @@ if (!a) Console.WriteLine("a is false.");
         }
     }
 }
+
+// An example that uses an implicit conversion operator.
+
+using System;
+namespace ConversionOperatorImplicit
+{
+    class ThreeD
+    {
+        int x, y, z;
+        public ThreeD()
+        {
+            x = y;
+            y = z;
+            z = 0;
+        }
+        public ThreeD(int i,int j,int k)
+        {
+            x = i;
+            y = j;
+            z = k;
+        }
+        public static ThreeD operator +(ThreeD op1,ThreeD op2)
+        {
+            ThreeD result = new ThreeD();
+            result.x = op1.x + op2.x;
+            result.y = op1.y + op2.y;
+            result.z = op1.z + op2.z;
+            return result;
+        }
+        public static implicit operator int(ThreeD op)
+        {
+            return op.x * op.y * op.z;
+        }
+        public void Show()
+        {
+            Console.WriteLine("X value :" + x + "\t Y Value : " + y + "\t Z value" + z);
+        }
+        class TheeDDemo
+        {
+            public static void Main()
+            {
+                ThreeD a = new ThreeD(1, 2, 3);
+                ThreeD b = new ThreeD(10, 10, 10);
+                ThreeD c=new ThreeD();
+                 int d;
+
+                Console.WriteLine("--- Here is A ---");
+                a.Show();
+                Console.WriteLine();
+                Console.WriteLine("--- Here is B ---");
+                b.Show();
+                Console.WriteLine();
+                Console.WriteLine("--- Here is C =A+B ---");
+                c = a + b;
+                c.Show();
+                Console.WriteLine();
+                d = a * 2 - b;
+                Console.WriteLine("--- Here is d = a * 2 - b ---"+d);
+                Console.WriteLine();
+
+            }
+
+        }
+    }
+}
+
+// An example that uses an explicit conversion operator.
+using System;
+namespace ConversionOperatorImplicit
+{
+    class ThreeD
+    {
+        int x, y, z;
+        public ThreeD()
+        {
+            x = y;
+            y = z;
+            z = 0;
+        }
+        public ThreeD(int i, int j, int k)
+        {
+            x = i;
+            y = j;
+            z = k;
+        }
+        public static ThreeD operator +(ThreeD op1, ThreeD op2)
+        {
+            ThreeD result = new ThreeD();
+            result.x = op1.x + op2.x;
+            result.y = op1.y + op2.y;
+            result.z = op1.z + op2.z;
+            return result;
+        }
+        public static explicit operator int(ThreeD op)
+        {
+            return op.x * op.y * op.z;
+        }
+        public void Show()
+        {
+            Console.WriteLine("X value :" + x + "\t Y Value : " + y + "\t Z value" + z);
+        }
+        class TheeDDemo
+        {
+            public static void Main()
+            {
+                ThreeD a = new ThreeD(1, 2, 3);
+                ThreeD b = new ThreeD(10, 10, 10);
+                ThreeD c = new ThreeD();
+                int d;
+
+                Console.WriteLine("--- Here is A ---");
+                a.Show();
+                Console.WriteLine();
+                Console.WriteLine("--- Here is B ---");
+                b.Show();
+                Console.WriteLine();
+                Console.WriteLine("--- Here is C =A+B ---");
+                c = a + b;
+                c.Show();
+                Console.WriteLine();
+                d = (int)b;
+                Console.WriteLine("--- Here is (int) A ---" + d);
+                Console.WriteLine();
+                d = (int)a * 2 - (int)b;
+                Console.WriteLine("--- Here is (int)a * 2 - (int)b ---" + d);
+                Console.WriteLine();
+
+            }
+
+        }
+    }
+}
+
+// Use an indexer to create a fail-soft array.
+using System;
+namespace IndexerDemo
+{
+    class FailSoftArray
+    {
+        int[] a;
+        public int Length;
+        public bool ErrFlag;
+    
+     public FailSoftArray(int size)
+     {
+        a = new int[size];
+        Length = size;
+     }
+     public int this[int index]
+        {
+            get
+            {
+                if (ok(index))
+                {
+                    ErrFlag = false;
+                    return a[index];
+                }
+                else
+                {
+                    ErrFlag = true;
+                    return 0;
+                }
+            }
+            set
+            {
+                if (ok(index))
+                {
+                    a[index] = value;
+                    ErrFlag =false;
+                }
+                else
+                {
+                    ErrFlag =true;
+                }
+            }
+        }
+
+          private bool ok(int index)
+        {
+            if (index >= 0 & index < Length)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+    }
+    class IndexerDemo
+    {
+        public static void Main()
+        {
+            FailSoftArray fs = new FailSoftArray(5);
+            int x,i;
+            Console.WriteLine("Fail quietly.");
+            for( i=0;i<(fs.Length*2);i++)
+            {
+                fs[i] = i * 10;
+            }
+            for(i=0;i<(fs.Length);i++)
+            {
+                x = fs[i];
+                if(fs[i] !=-1)
+                {
+                    Console.WriteLine(x + "    ");
+                }
+            }
+        }
+    }
+}
+
+// A simple property example.
+using System;
+namespace GetSetPropertyDemo
+{
+    class Prop
+    {
+        int prop;
+        public Prop()
+        {
+            prop = 0;
+        }
+        public int MyProp
+        {
+            get
+            {
+                return prop;
+            }
+            set
+            {
+                if(value>=0)
+                {
+                    prop = value;
+                }
+            }
+        }
+    }
+    class SimePropDemo
+    {
+        public static void Main()
+        {
+            Prop ob = new Prop();
+
+            Console.WriteLine("MyProp origin Value "+ob.MyProp);
+            ob.MyProp = 100;
+            Console.WriteLine("MyProp Change  Value " + ob.MyProp);
+            Console.WriteLine("Attempting to assign -10 to ob.MyProp");
+            ob.MyProp = 2;
+            Console.WriteLine("Value of ob.MyProp: " + ob.MyProp);
+        }
+    }
+}
 */
